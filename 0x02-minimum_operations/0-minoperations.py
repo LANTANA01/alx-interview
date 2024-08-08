@@ -2,6 +2,7 @@
 """Finding minimum operations """
 
 def minOperations(n):
+    #defines the functin for minoperations
     if n <= 1:
         return 0
     
