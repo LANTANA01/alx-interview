@@ -1,15 +1,24 @@
 #!/usr/bin/python3
+"""Finding minimum operations """
 
 def minOperations(n):
     if n <= 1:
         return 0
     
-    operations = 0
-    current = n
-    
-    for i in range(2, n + 1):
-        while current % i == 0:
-            operations += i  # Copy All (1 operation) + Paste (i-1 operations)
-            current //= i  # Reduce current by factor i
-            
-    return operations
+    num_of_operations = 0
+    divisor = 2
+
+    while n > 1:
+        if n % divisor == 0:
+            print("divisor is", divisor)
+            n = n / divisor
+            print("\nn = n / divisor", n)
+
+            num_of_operations = num_of_operations + divisor
+            print("\nnum of operations", num_of_operations)
+
+        else:
+            divisor += 1
+            print("divisor after increment: ", divisor)
+
+    return num_of_operations
