@@ -1,9 +1,8 @@
 #!/usr/bin/python3
 """ Determines who the winner of each game is."""
 
-
 def isWinner(x, nums):
-    """ Implent a function to get who has won in prime game"""
+    """ Implement a function to get who has won in prime game"""
     mariaWinsCount = 0
     benWinsCount = 0
 
@@ -54,5 +53,4 @@ def is_prime(n):
 def primes_in_range(start, end):
     """ Returns a list of prime numbers between start and end."""
     primes = [n for n in range(start, end+1) if is_prime(n)]
-    return primes                         
-            
+    return primes
