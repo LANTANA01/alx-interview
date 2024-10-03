@@ -3,41 +3,56 @@
 
 
 def isWinner(x, nums):
-    def sieve(n):
-        """ Helper function to generate list of primes up to n using Sieve of Eratosthenes """
-        is_prime = [True] * (n + 1)
-        p = 2
-        while (p * p <= n):
-            if (is_prime[p] == True):
-                for i in range(p * p, n + 1, p):
-                    is_prime[i] = False
-            p += 1
-        return [p for p in range(2, n + 1) if is_prime[p]]
+    """ Implent a function to get who has won in prime game"""
+    mariaWinsCount = 0
+    benWinsCount = 0
 
-    def play_game(n):
-        """ Simulate the game for a given n """
-        primes = sieve(n)
-        moves = 0
-        while primes:
-            prime = primes[0]
-            primes = [p for p in primes if p % prime != 0]
-            moves += 1
-        return moves % 2 == 1  # Maria wins if moves are odd, Ben wins if moves are even
+    for num in nums:
+        roundsSet = list(range(1, num + 1))
+        primesSet = primes_in_range(1, num)
 
-    maria_wins = 0
-    ben_wins = 0
+        if not primesSet:
+            benWinsCount += 1
+            continue
 
-    for n in nums:
-        if n == 1:
-            ben_wins += 1
-        elif play_game(n):
-            maria_wins += 1
-        else:
-            ben_wins += 1
+        isMariaTurns = True
 
-    if maria_wins > ben_wins:
+        while(True):
+            if not primesSet:
+                if isMariaTurns:
+                    benWinsCount += 1
+                else:
+                    mariaWinsCount += 1
+                break
+
+            smallestPrime = primesSet.pop(0)
+            roundsSet.remove(smallestPrime)
+
+            roundsSet = [x for x in roundsSet if x % smallestPrime != 0]
+
+            isMariaTurns = not isMariaTurns
+
+    if mariaWinsCount > benWinsCount:
         return "Maria"
-    elif ben_wins > maria_wins:
+
+    if mariaWinsCount < benWinsCount:
         return "Ben"
-    else:
-        return None
+
+    return None
+
+
+def is_prime(n):
+    """ Returns True if n is prime number, else False."""
+    if n < 2:
+        return False
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+
+def primes_in_range(start, end):
+    """ Returns a list of prime numbers between start and end."""
+    primes = [n for n in range(start, end+1) if is_prime(n)]
+    return primes                         
+            
